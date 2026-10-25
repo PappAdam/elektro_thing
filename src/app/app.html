@@ -1,0 +1,46 @@
+<div class="app-root-layout">
+  <!-- Top Header Navigation & Toolbar -->
+  <app-header
+    (openTruthTableResult)="openTruthTable($event)"
+    (openCustomGateModal)="showCustomGateModal.set(true)"
+    (openPackageModal)="showPackageModal.set(true)"
+    (openSavedTables)="showSavedTablesDrawer.set(true)"
+  ></app-header>
+
+  <!-- Main Workspace: Sidebar & Canvas -->
+  <main class="main-workspace">
+    <app-sidebar
+      (openCustomGateModal)="showCustomGateModal.set(true)"
+    ></app-sidebar>
+
+    <app-canvas></app-canvas>
+  </main>
+
+  <!-- Modals & Overlays -->
+
+  <!-- 1. Truth Table Result Viewer -->
+  <app-truth-table-modal
+    *ngIf="activeTruthTable() as table"
+    [table]="table"
+    (close)="closeTruthTable()"
+  ></app-truth-table-modal>
+
+  <!-- 2. Create Custom Gate by Truth Table -->
+  <app-custom-gate-modal
+    *ngIf="showCustomGateModal()"
+    (close)="showCustomGateModal.set(false)"
+  ></app-custom-gate-modal>
+
+  <!-- 3. Package Current Circuit as Reusable Component -->
+  <app-package-modal
+    *ngIf="showPackageModal()"
+    (close)="showPackageModal.set(false)"
+  ></app-package-modal>
+
+  <!-- 4. Persistent Saved Truth Tables Drawer -->
+  <app-saved-tables-drawer
+    *ngIf="showSavedTablesDrawer()"
+    (close)="showSavedTablesDrawer.set(false)"
+    (viewTable)="viewSavedTable($event)"
+  ></app-saved-tables-drawer>
+</div>
